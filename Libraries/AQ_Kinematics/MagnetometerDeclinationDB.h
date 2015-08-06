@@ -21,7 +21,7 @@
 #ifndef _AQ_DECLINATION_DB_
 #define _AQ_DECLINATION_DB_
 
-#ifdef AeroQuadSTM32
+#ifdef AeroQuadSTM32 || AeroQuadBoneBlack
   #define PGM_UINT8(p) (*(p))
   #define MAGDB_PROGMEM
   #define memcpy_P memcpy

@@ -119,4 +119,51 @@ byte spi_readreg(byte r) {
 
 
 #endif // AeroQuadSTM32
+
+#if defined(AeroQuadBoneBlack)
+
+#include <SPI.h>
+
+void spi_osd_select() {
+
+#ifdef OSD_CS
+  digitalWrite( OSD_CS, LOW );
+#endif
+
+}
+
+void spi_osd_deselect() {
+
+#ifdef OSD_CS
+  digitalWrite( OSD_CS, HIGH );
+#endif
+
+}
+
+void initializeSPI() {
+
+#ifdef OSD_CS
+  pinMode( OSD_CS, OUTPUT );
+  digitalWrite( OSD_CS, HIGH );
+#endif
+
+  SPISettings OSDSettings(9000000, MSBFIRST, SPI_MODE0);
+  SPI_DEVICE.begin();
+  SPI_DEVICE.beginTransaction(OSDSettings);
+}
+
+void spi_writereg(byte r, byte d) {
+
+  SPI_DEVICE.transfer(r);
+  SPI_DEVICE.transfer(d);
+}
+
+byte spi_readreg(byte r) {
+
+  SPI_DEVICE.transfer(r);
+  return(SPI_DEVICE.transfer(0));
+}
+
+#endif // BeagleBone Black
+
 #endif

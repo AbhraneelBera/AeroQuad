@@ -27,7 +27,7 @@ struct gpsData gpsData; // This is accessed by the parser functions directly !
 
 // default port
 #ifndef GPS_SERIAL
-  #ifdef AeroQuadSTM32
+  #ifdef AeroQuadSTM32 || AeroQuadBoneBlack
     #define GPS_SERIAL Serial2
   #else
     #define GPS_SERIAL Serial1

@@ -21,7 +21,7 @@
 #ifndef _AEROQUAD_CAMERA_STABILIZER_TXCONTROL_H_
 #define _AEROQUAD_CAMERA_STABILIZER_TXCONTROL_H_
 
-#if defined (__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined (AeroQuadSTM32)
+#if defined (__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined (AeroQuadSTM32) || defined (AeroQuadBoneBlack)
 
 #include "CameraStabilizer.h"
 

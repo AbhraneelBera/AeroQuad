@@ -1,0 +1,9 @@
+1. Open the wiringBone folder in terminal
+
+2. Make the 'build-source' shell script executable by typing: chmod 755 build-source
+
+3. To compile the code type: ./build-source make
+
+4. To use the USB serial type: systemctl stop serial-getty@ttyGS0.service
+
+5. To run the code type: ./build-source run

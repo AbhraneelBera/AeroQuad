@@ -1063,6 +1063,10 @@
   #include "AeroQuad_STM32.h"
 #endif
 
+#ifdef AeroQuadBoneBlack
+  #include "AeroQuad_BoneBlack.h"
+#endif
+
 // default to 10bit ADC (AVR)
 #ifndef ADC_NUMBER_OF_BITS
 #define ADC_NUMBER_OF_BITS 10
@@ -1101,6 +1105,10 @@
   #include <Receiver_STM32PPM.h>  
 #elif defined(RECEIVER_STM32)
   #include <Receiver_STM32.h>  
+#elif defined(RECEIVER_BONE_BLACK_PPM)
+  #include <Receiver_BoneBlack_PPM.h>
+#elif defined(RECEIVER_BONE_BLACK)
+  #include <Receiver_BoneBlack.h>
 #endif
 
 #if defined(UseAnalogRSSIReader) 
@@ -1120,6 +1128,8 @@
   #if defined (MOTOR_STM32)
     #define MOTORS_STM32_TRI
     #include <Motors_STM32.h>    
+  #elif defined (MOTOR_BONE_BLACK)
+    #include <Motors_BoneBlack.h>
   #else
     #include <Motors_Tri.h>
   #endif
@@ -1132,7 +1142,9 @@
 #elif defined(MOTOR_I2C)
   #include <Motors_I2C.h>
 #elif defined(MOTOR_STM32)
-  #include <Motors_STM32.h>    
+  #include <Motors_STM32.h> 
+#elif defined(MOTOR_BONE_BLACK)
+  #include <Motors_BoneBlack.h>   
 #endif
 
 //********************************************************
@@ -1174,6 +1186,8 @@
 // used only on mega for now
 #if defined(CameraControl_STM32)
   #include <CameraStabilizer_STM32.h>
+#elif defined(CameraControl_BoneBlack)
+  #include <CameraStabilizer_BoneBlack.h>
 #elif defined(CameraControl)
   #include <CameraStabilizer_Aeroquad.h>
 #endif
@@ -1249,10 +1263,12 @@
     #define SERIAL_PORT Serial
   #endif
 #else  
-  #if defined(SERIAL_USES_USB)   // STM32 Maple
+  #if defined(SERIAL_USES_USB)   // STM32 Maple and BeagleBone Black
     #define SERIAL_PORT SerialUSB
-    #undef BAUD
-    #define BAUD
+    #ifdef AeroQuadSTM32
+      #undef BAUD
+      #define BAUD
+    #endif
   #else
     #define SERIAL_PORT Serial
   #endif

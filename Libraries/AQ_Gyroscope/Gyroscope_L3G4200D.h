@@ -30,7 +30,7 @@
 #include <Gyroscope.h>
 #include <SensorsStatus.h>
 
-#define GYRO_CALIBRATION_TRESHOLD 4
+#define GYRO_CALIBRATION_TRESHOLD 8
 
 #define GYRO_ADDRESS 0x69
 
@@ -58,20 +58,20 @@ void initializeGyro() {
 
 
   // Enable x, y, z and turn off power down:
-  updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG1, 0b10011111);
+  updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG1, 0b01001111);
   delay(5);
   // If you'd like to adjust/use the HPF, you can edit the line below to configure CTRL_REG2:
   //updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG2, 0b00000000);
   delay(5);
   // CTRL_REG4 controls the full-scale range, among other things:
   if(GYRO_RATE == 250){
-    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b10000000);
+    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b00000000);
     gyroScaleFactor = radians(1.0 / 10);
   }else if(GYRO_RATE == 500){
-    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b10010000);
+    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b00010000);
     gyroScaleFactor = radians(1.0 / 17.5);
   }else{
-    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b10110000);
+    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b00100000);
     //gyroScaleFactor = radians(1.0 / 70);
     gyroScaleFactor = radians(0.061);
   }

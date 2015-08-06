@@ -434,8 +434,8 @@ void sendSerialTelemetry() {
 
   case 'g': // Send transmitter calibration data
     for (byte axis = XAXIS; axis < LASTCHANNEL; axis++) {
-      Serial.print(receiverSlope[axis], 6);
-      Serial.print(',');
+      SERIAL_PRINT(receiverSlope[axis], 6);
+      SERIAL_PRINT(',');
     }
     SERIAL_PRINTLN();
     queryType = 'X';
@@ -443,8 +443,8 @@ void sendSerialTelemetry() {
 
   case 'h': // Send transmitter calibration data
     for (byte axis = XAXIS; axis < LASTCHANNEL; axis++) {
-      Serial.print(receiverOffset[axis], 6);
-      Serial.print(',');
+      SERIAL_PRINT(receiverOffset[axis], 6);
+      SERIAL_PRINT(',');
     }
     SERIAL_PRINTLN();
     queryType = 'X';
@@ -924,6 +924,8 @@ void reportVehicleState() {
     SERIAL_PRINTLN("Mini");
   #elif defined(AeroQuadSTM32)
     SERIAL_PRINTLN(STM32_BOARD_TYPE);
+  #elif defined(AeroQuadBoneBlack)
+    SERIAL_PRINTLN("BeagleBone Black");
   #endif
 
   SERIAL_PRINT("Flight Config: ");
