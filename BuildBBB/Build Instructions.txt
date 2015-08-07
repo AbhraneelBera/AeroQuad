@@ -1,9 +1,29 @@
-1. Open the wiringBone folder in terminal
+1. First of all disable the hdmi cape:
+   Open the uEnv.txt file by typing: vi /boot/uEnv.txt
+   Replace the line:
+   #cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
+   to:
+   cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
+   Save the file and exit. Then reboot.
+   To check whether hdmi is disabled after reboot type: cat /sys/devices/bone_capemgr.*/slots
+   On the last line you should get something like:
+   $ cat /sys/devices/bone_capemgr.*/slots
+    0: 54:PF---
+    1: 55:PF---
+    2: 56:PF---
+    3: 57:PF---
+    4: ff:P-O-L Bone-LT-eMMC-2G,00A0,Texas Instrument,BB-BONE-EMMC-2G
+    5: ff:P-O-- Bone-Black-HDMI,00A0,Texas Instrument,BB-BONELT-HDMI
+    6: ff:P-O-- Bone-Black-HDMIN,00A0,Texas Instrument,BB-BONELT-HDMIN
 
-2. Make the 'build-source' shell script executable by typing: chmod 755 build-source
+   If you see a 'L'  after 'O' on the last two lines then HDMI is not disabled.
 
-3. To compile the code type: ./build-source make
+2. Open the wiringBone folder in terminal
 
-4. To use the USB serial type: systemctl stop serial-getty@ttyGS0.service
+3. Make the 'build-source' shell script executable by typing: chmod 755 build-source
 
-5. To run the code type: ./build-source run
+4. To compile the code type: ./build-source make
+
+5. To use the USB serial type: systemctl stop serial-getty@ttyGS0.service
+
+6. To run the code type: ./build-source run
