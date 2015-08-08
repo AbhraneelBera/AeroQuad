@@ -65,15 +65,17 @@ void initializeGyro() {
   delay(5);
   // CTRL_REG4 controls the full-scale range, among other things:
   if(GYRO_RATE == 250){
-    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b00000000);
-    gyroScaleFactor = radians(1.0 / 10);
+    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b10000000);
+    //gyroScaleFactor = radians(1.0 / 10);
+	gyroScaleFactor = radians(10.0 / 1000);
   }else if(GYRO_RATE == 500){
-    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b00010000);
-    gyroScaleFactor = radians(1.0 / 17.5);
+    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b10010000);
+    //gyroScaleFactor = radians(1.0 / 17.5);
+	gyroScaleFactor = radians(17.5 / 1000);
   }else{
-    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b00100000);
+    updateRegisterI2C(GYRO_ADDRESS, GYRO_CTRL_REG4, 0b10100000);
     //gyroScaleFactor = radians(1.0 / 70);
-    gyroScaleFactor = radians(0.061);
+    gyroScaleFactor = radians(70.0 / 1000);
   }
   delay(5);
   // High pass filter enabled 
@@ -142,11 +144,11 @@ boolean calibrateGyro() {
 
   int findZero[FINDZERO];
   int diff = 0; 
+  int gyroRaw[3];
   for (byte axis = XAXIS; axis <= ZAXIS; axis++) {
     for (int i=0; i<FINDZERO; i++) {
-      sendByteI2C(GYRO_ADDRESS, 0x80 | (0x28+axis*2));
-      Wire.requestFrom(GYRO_ADDRESS,2);
-      findZero[i] = readReverseShortI2C();
+      readGyroRaw(gyroRaw);
+      findZero[i] = gyroRaw[axis];
       delay(10);
     }
     int tmp = findMedianIntWithDiff(findZero, FINDZERO, &diff);
